@@ -98,6 +98,19 @@ function BlockSpinner({ position = [0, 0, 0] }) {
   );
 }
 
+/**
+ * BlockLimbo Component
+ *
+ * This component renders a 3D block with a dynamic, oscillating obstacle in a Three.js scene.
+ * It includes:
+ * - A static floor mesh.
+ * - A kinematic rigid body obstacle that moves up and down.
+ *
+ * @param {Object} props - Component props.
+ * @param {Array<number>} props.position - The position of the block group in 3D space. 
+ * Defaults to `[0, 0, 0]`.
+ * @returns {JSX.Element} - A Three.js group containing the floor and oscillating obstacle.
+ */
 function BlockLimbo({ position = [0, 0, 0] }) {
   const obstacle = useRef();
   const timeOffset = useRef(Math.random() * Math.PI * 2);
