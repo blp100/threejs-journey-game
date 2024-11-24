@@ -9,6 +9,9 @@ export default function Player() {
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
 
+  const smoothedCameraPosition = useRef(new THREE.Vector3());
+  const smoothedCameraTarget = useRef(new THREE.Vector3());
+
   /**
    * Handles the jump action for the player.
    * Uses a raycast to detect if the player is close to the ground before allowing a jump.
@@ -81,8 +84,11 @@ export default function Player() {
     cameraTarget.copy(bodyPosition);
     cameraTarget.y += 0.25;
 
-    state.camera.position.copy(cameraPostion);
-    state.camera.lookAt(cameraTarget);
+    smoothedCameraPosition.current.lerp(cameraPostion, 0.1);
+    smoothedCameraTarget.current.lerp(cameraTarget, 0.1);
+
+    state.camera.position.copy(smoothedCameraPosition.current);
+    state.camera.lookAt(smoothedCameraTarget.current);
   });
 
   return (
