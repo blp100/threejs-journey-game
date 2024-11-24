@@ -24,7 +24,6 @@ const wallMaterial = new THREE.MeshStandardMaterial({
  * This component renders a simple 3D block group in a Three.js scene.
  * It consists of a floor mesh with custom geometry and material.
  *
- * @param {Object} props - Component props.
  * @param {Array<number>} props.position - The position of the block group in 3D space.
  * Defaults to `[0, 0, 0]`.
  * @returns {JSX.Element} - A Three.js group containing the block's geometry and material.
@@ -52,7 +51,6 @@ function BlockStart({ position = [0, 0, 0] }) {
  * - A floor mesh with custom geometry and material.
  * - A spinning obstacle represented as a kinematic rigid body, positioned above the floor.
  *
- * @param {Object} props - Component props.
  * @param {Array<number>} props.position - The position of the block group in 3D space.
  * Defaults to `[0, 0, 0]`.
  * @returns {JSX.Element} - A Three.js group containing the floor and spinning obstacle.
@@ -106,7 +104,6 @@ function BlockSpinner({ position = [0, 0, 0] }) {
  * - A static floor mesh.
  * - A kinematic rigid body obstacle that moves up and down.
  *
- * @param {Object} props - Component props.
  * @param {Array<number>} props.position - The position of the block group in 3D space.
  * Defaults to `[0, 0, 0]`.
  * @returns {JSX.Element} - A Three.js group containing the floor and oscillating obstacle.
@@ -156,6 +153,15 @@ function BlockLimbo({ position = [0, 0, 0] }) {
   );
 }
 
+/**
+ * BlockAxe component
+ *
+ * This component represents a moving obstacle that swings horizontally like an axe.
+ * It uses Three.js and React Three Fiber to create the animation and physics.
+ *
+ * @param {Array<number>} position - The position of the block [x, y, z].
+ * @returns {JSX.Element} A Three.js group containing the floor and the swinging obstacle.
+ */
 function BlockAxe({ position = [0, 0, 0] }) {
   const obstacle = useRef();
   const timeOffset = useRef(Math.random() * Math.PI * 2);
