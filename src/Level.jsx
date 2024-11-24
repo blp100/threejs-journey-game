@@ -44,7 +44,19 @@ function BlockStart({ position = [0, 0, 0] }) {
   );
 }
 
-
+/**
+ * BlockSpinner Component
+ *
+ * This component renders a more complex 3D block group in a Three.js scene.
+ * It consists of:
+ * - A floor mesh with custom geometry and material.
+ * - A spinning obstacle represented as a kinematic rigid body, positioned above the floor.
+ *
+ * @param {Object} props - Component props.
+ * @param {Array<number>} props.position - The position of the block group in 3D space.
+ * Defaults to `[0, 0, 0]`.
+ * @returns {JSX.Element} - A Three.js group containing the floor and spinning obstacle.
+ */
 function BlockSpinner({ position = [0, 0, 0] }) {
   const obstacle = useRef();
 
