@@ -107,7 +107,7 @@ function BlockSpinner({ position = [0, 0, 0] }) {
  * - A kinematic rigid body obstacle that moves up and down.
  *
  * @param {Object} props - Component props.
- * @param {Array<number>} props.position - The position of the block group in 3D space. 
+ * @param {Array<number>} props.position - The position of the block group in 3D space.
  * Defaults to `[0, 0, 0]`.
  * @returns {JSX.Element} - A Three.js group containing the floor and oscillating obstacle.
  */
@@ -120,7 +120,11 @@ function BlockLimbo({ position = [0, 0, 0] }) {
 
     const y = Math.sin(time + timeOffset.current) + 1.15;
     if (obstacle.current)
-      obstacle.current.setNextKinematicTranslation({ x: 0, y: y, z: 0 });
+      obstacle.current.setNextKinematicTranslation({
+        x: position[0],
+        y: position[1] + y,
+        z: position[2],
+      });
   });
 
   return (
