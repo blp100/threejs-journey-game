@@ -7,7 +7,7 @@ export default function Lights() {
   useFrame((state, delta) => {
     light.current.position.z = state.camera.position.z + 1 - 4;
     light.current.target.position.z = state.camera.position.z - 4;
-    light.current.target.updateMatrixWorld();
+    light.current.target.updateMatrixWorld();  // Ensure the target matrix is updated for correct shadow rendering
   });
 
   return (

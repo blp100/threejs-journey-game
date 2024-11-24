@@ -84,6 +84,7 @@ export default function Player() {
     cameraTarget.copy(bodyPosition);
     cameraTarget.y += 0.25;
 
+    // Smooth the camera's position using lerp (linear interpolation) for a smooth transition over time
     smoothedCameraPosition.current.lerp(cameraPostion, 5 * delta);
     smoothedCameraTarget.current.lerp(cameraTarget, 5 * delta);
 
