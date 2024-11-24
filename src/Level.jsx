@@ -47,11 +47,13 @@ function BlockStart({ position = [0, 0, 0] }) {
 /**
  * BlockEnd component
  *
- * This component represents the final block in the scene, acting as the endpoint.
- * It includes a simple floor mesh styled with the specified material and geometry.
+ * This component represents the end of a level, featuring a floor and a 3D hamburger model as a reward.
+ * It uses Three.js and React Three Fiber to render the 3D elements and physics.
  *
  * @param {Array<number>} position - The position of the block [x, y, z].
- * @returns {JSX.Element} A Three.js group containing the floor for the ending block.
+ * @returns {JSX.Element} A Three.js group containing the floor and the hamburger reward.
+ *
+ * The hamburger model is loaded using the GLTF loader and configured to cast shadows for realistic rendering.
  */
 function BlockEnd({ position = [0, 0, 0] }) {
   const hamburger = useGLTF("./hamburger.glb");
