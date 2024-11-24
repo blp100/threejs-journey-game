@@ -59,12 +59,13 @@ function BlockStart({ position = [0, 0, 0] }) {
  */
 function BlockSpinner({ position = [0, 0, 0] }) {
   const obstacle = useRef();
+  const speed = useRef((Math.random() + 0.2));
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
 
     const rotation = new THREE.Quaternion();
-    rotation.setFromEuler(new THREE.Euler(0, time, 0));
+    rotation.setFromEuler(new THREE.Euler(0, time * speed.current, 0));
     if (obstacle.current) obstacle.current.setNextKinematicRotation(rotation);
   });
 
