@@ -84,8 +84,8 @@ export default function Player() {
     cameraTarget.copy(bodyPosition);
     cameraTarget.y += 0.25;
 
-    smoothedCameraPosition.current.lerp(cameraPostion, 0.1);
-    smoothedCameraTarget.current.lerp(cameraTarget, 0.1);
+    smoothedCameraPosition.current.lerp(cameraPostion, 5 * delta);
+    smoothedCameraTarget.current.lerp(cameraTarget, 5 * delta);
 
     state.camera.position.copy(smoothedCameraPosition.current);
     state.camera.lookAt(smoothedCameraTarget.current);
