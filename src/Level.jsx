@@ -29,7 +29,7 @@ const wallMaterial = new THREE.MeshStandardMaterial({
  * Defaults to `[0, 0, 0]`.
  * @returns {JSX.Element} - A Three.js group containing the block's geometry and material.
  */
-function BlockStart({ position = [0, 0, 0] }) {
+export function BlockStart({ position = [0, 0, 0] }) {
   return (
     <group position={position}>
       {/* Floor */}
@@ -55,7 +55,7 @@ function BlockStart({ position = [0, 0, 0] }) {
  *
  * The hamburger model is loaded using the GLTF loader and configured to cast shadows for realistic rendering.
  */
-function BlockEnd({ position = [0, 0, 0] }) {
+export function BlockEnd({ position = [0, 0, 0] }) {
   const hamburger = useGLTF("./hamburger.glb");
 
   hamburger.scene.children.forEach((mesh) => {
@@ -97,7 +97,7 @@ function BlockEnd({ position = [0, 0, 0] }) {
  * Defaults to `[0, 0, 0]`.
  * @returns {JSX.Element} - A Three.js group containing the floor and spinning obstacle.
  */
-function BlockSpinner({ position = [0, 0, 0] }) {
+export function BlockSpinner({ position = [0, 0, 0] }) {
   const obstacle = useRef();
   const speed = useRef(Math.random() + 0.2);
 
@@ -150,7 +150,7 @@ function BlockSpinner({ position = [0, 0, 0] }) {
  * Defaults to `[0, 0, 0]`.
  * @returns {JSX.Element} - A Three.js group containing the floor and oscillating obstacle.
  */
-function BlockLimbo({ position = [0, 0, 0] }) {
+export function BlockLimbo({ position = [0, 0, 0] }) {
   const obstacle = useRef();
   const timeOffset = useRef(Math.random() * Math.PI * 2);
 
@@ -204,7 +204,7 @@ function BlockLimbo({ position = [0, 0, 0] }) {
  * @param {Array<number>} position - The position of the block [x, y, z].
  * @returns {JSX.Element} A Three.js group containing the floor and the swinging obstacle.
  */
-function BlockAxe({ position = [0, 0, 0] }) {
+export function BlockAxe({ position = [0, 0, 0] }) {
   const obstacle = useRef();
   const timeOffset = useRef(Math.random() * Math.PI * 2);
 
@@ -249,14 +249,13 @@ function BlockAxe({ position = [0, 0, 0] }) {
   );
 }
 
-export default function Level() {
+export function Level({
+  count = 5,
+  types = [BlockSpinner, BlockAxe, BlockLimbo],
+}) {
   return (
     <>
-      <BlockStart position={[0, 0, 16]} />
-      <BlockSpinner position={[0, 0, 12]} />
-      <BlockLimbo position={[0, 0, 8]} />
-      <BlockAxe position={[0, 0, 4]} />
-      <BlockEnd position={[0, 0, 0]} />
+      <BlockStart position={[0, 0, 0]} />
     </>
   );
 }
