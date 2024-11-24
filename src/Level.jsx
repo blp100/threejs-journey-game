@@ -44,6 +44,30 @@ function BlockStart({ position = [0, 0, 0] }) {
 }
 
 /**
+ * BlockEnd component
+ *
+ * This component represents the final block in the scene, acting as the endpoint.
+ * It includes a simple floor mesh styled with the specified material and geometry.
+ *
+ * @param {Array<number>} position - The position of the block [x, y, z].
+ * @returns {JSX.Element} A Three.js group containing the floor for the ending block.
+ */
+function BlockEnd({ position = [0, 0, 0] }) {
+  return (
+    <group position={position}>
+      {/* Floor */}
+      <mesh
+        geometry={boxGeometry}
+        material={floor1Material}
+        position={[0, 0, 0]}
+        scale={[4, 0.2, 4]}
+        receiveShadow
+      />
+    </group>
+  );
+}
+
+/**
  * BlockSpinner Component
  *
  * This component renders a more complex 3D block group in a Three.js scene.
@@ -210,10 +234,11 @@ function BlockAxe({ position = [0, 0, 0] }) {
 export default function Level() {
   return (
     <>
-      <BlockStart position={[0, 0, 12]} />
-      <BlockSpinner position={[0, 0, 8]} />
-      <BlockLimbo position={[0, 0, 4]} />
-      <BlockAxe position={[0, 0, 0]} />
+      <BlockStart position={[0, 0, 16]} />
+      <BlockSpinner position={[0, 0, 12]} />
+      <BlockLimbo position={[0, 0, 8]} />
+      <BlockAxe position={[0, 0, 4]} />
+      <BlockEnd position={[0, 0, 0]} />
     </>
   );
 }
