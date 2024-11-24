@@ -9,7 +9,7 @@ export default function Player() {
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
 
-  const smoothedCameraPosition = useRef(new THREE.Vector3());
+  const smoothedCameraPosition = useRef(new THREE.Vector3(10, 10, 10));
   const smoothedCameraTarget = useRef(new THREE.Vector3());
 
   /**
