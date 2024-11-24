@@ -250,6 +250,45 @@ export function BlockAxe({ position = [0, 0, 0] }) {
 }
 
 /**
+ * Bounds component
+ *
+ * This component creates a set of fixed boundaries (walls) in the scene.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {number} [props.length=1] - The length that determines the scaling of the walls.
+ * @returns {JSX.Element} A set of 3 walls that act as boundaries in the scene.
+ */
+function Bounds({ length = 1 }) {
+  return (
+    <>
+      <RigidBody type="fixed" restitution={0} friction={0}>
+        <mesh
+          position={[2.15, 0.75, -(length * 2) + 2]}
+          geometry={boxGeometry}
+          material={wallMaterial}
+          scale={[0.3, 1.5, 4 * length]}
+          castShadow
+        />
+        <mesh
+          position={[-2.15, 0.75, -(length * 2) + 2]}
+          geometry={boxGeometry}
+          material={wallMaterial}
+          scale={[0.3, 1.5, 4 * length]}
+          receiveShadow
+        />
+        <mesh
+          position={[0, 0.75, -(length * 4) + 2]}
+          geometry={boxGeometry}
+          material={wallMaterial}
+          scale={[4, 1.5, 0.3]}
+          receiveShadow
+        />
+      </RigidBody>
+    </>
+  );
+}
+
+/**
  * Level component
  *
  * This component generates a series of blocks to create a level in the game.
@@ -257,7 +296,7 @@ export function BlockAxe({ position = [0, 0, 0] }) {
  *
  * @param {Object} props - The props object.
  * @param {number} [props.count=5] - The number of dynamic blocks in the level.
- * @param {Array<React.ElementType>} [props.types=[BlockSpinner, BlockAxe, BlockLimbo]] - 
+ * @param {Array<React.ElementType>} [props.types=[BlockSpinner, BlockAxe, BlockLimbo]] -
  *        An array of block components to randomly select from when generating the level.
  * @returns {JSX.Element} A set of Three.js blocks that make up the level.
  */
@@ -283,6 +322,8 @@ export function Level({
         <Block key={index} position={[0, 0, -(index + 1) * 4]} />
       ))}
       <BlockEnd position={[0, 0, -(count + 1) * 4]} />
+
+      <Bounds length={count + 2} />
     </>
   );
 }
