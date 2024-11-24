@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { RigidBody } from "@react-three/rapier";
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 
@@ -249,13 +249,40 @@ export function BlockAxe({ position = [0, 0, 0] }) {
   );
 }
 
+/**
+ * Level component
+ *
+ * This component generates a series of blocks to create a level in the game.
+ * It uses a combination of static and dynamically generated blocks to provide variety.
+ *
+ * @param {Object} props - The props object.
+ * @param {number} [props.count=5] - The number of dynamic blocks in the level.
+ * @param {Array<React.ElementType>} [props.types=[BlockSpinner, BlockAxe, BlockLimbo]] - 
+ *        An array of block components to randomly select from when generating the level.
+ * @returns {JSX.Element} A set of Three.js blocks that make up the level.
+ */
 export function Level({
   count = 5,
   types = [BlockSpinner, BlockAxe, BlockLimbo],
 }) {
+  const blocks = useMemo(() => {
+    const blocks = [];
+
+    for (let i = 0; i < count; i++) {
+      const type = types[Math.floor(Math.random() * types.length)];
+      blocks.push(type);
+    }
+
+    return blocks;
+  }, [count, types]);
+
   return (
     <>
       <BlockStart position={[0, 0, 0]} />
+      {blocks.map((Block, index) => (
+        <Block key={index} position={[0, 0, -(index + 1) * 4]} />
+      ))}
+      <BlockEnd position={[0, 0, -(count + 1) * 4]} />
     </>
   );
 }
