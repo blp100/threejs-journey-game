@@ -8,10 +8,14 @@ export default function Player() {
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
 
+  /**
+   * Handles the jump action for the player.
+   * Uses a raycast to detect if the player is close to the ground before allowing a jump.
+   */
   const jump = (value) => {
     const origin = body.current.translation();
-    origin.y -= 0.31;
-    const direction = { x: 0, y: -1, z: 0 };
+    origin.y -= 0.31; // Offset to place the raycast slightly below the player.
+    const direction = { x: 0, y: -1, z: 0 }; // Raycast direction (downwards).
     const ray = new rapier.Ray(origin, direction);
     const hit = world.castRay(ray, 10, true);
 
@@ -19,6 +23,9 @@ export default function Player() {
       body.current.applyImpulse({ x: 0, y: 0.5, z: 0 });
   };
 
+  /**
+   * Subscribe to the jump key and trigger the jump method when the key is pressed.
+   */
   useEffect(() => {
     const unsubscribeJump = subscribeKeys((state) => state.jump, jump);
     return () => unsubscribeJump();
