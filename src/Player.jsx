@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useKeyboardControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import useGame from "./stores/useGame.js";
 
 export default function Player() {
   const body = useRef();
@@ -11,6 +12,11 @@ export default function Player() {
 
   const smoothedCameraPosition = useRef(new THREE.Vector3(10, 10, 10));
   const smoothedCameraTarget = useRef(new THREE.Vector3());
+
+  const start = useGame((state) => state.start);
+  const end = useGame((state) => state.end);
+  const restart = useGame((state) => state.end);
+  const blocksCount = useGame((state) => state.blocksCount);
 
   /**
    * Handles the jump action for the player.
@@ -38,7 +44,14 @@ export default function Player() {
       }
     );
 
-    return () => unsubscribeJump();
+    const unsubscribeAny = subscribeKeys(() => {
+      start();
+    });
+
+    return () => {
+      unsubscribeJump();
+      unsubscribeAny();
+    };
   }, []);
 
   useFrame((state, delta) => {
@@ -80,8 +93,8 @@ export default function Player() {
     /**
      * Camera
      */
-    if (body.current) {
-      const bodyPosition = body.current.translation();
+    const bodyPosition = body.current?.translation();
+    if (bodyPosition) {
       const cameraPostion = new THREE.Vector3();
       cameraPostion.copy(bodyPosition);
       cameraPostion.z += 2.25;
@@ -97,6 +110,16 @@ export default function Player() {
 
       state.camera.position.copy(smoothedCameraPosition.current);
       state.camera.lookAt(smoothedCameraTarget.current);
+    }
+
+    /**
+     * Phases
+     */
+    if (bodyPosition?.z < -(blocksCount * 4 + 2)) {
+      end();
+    }
+    if (bodyPosition?.z > -4) {
+      restart();
     }
   });
 
