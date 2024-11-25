@@ -1,6 +1,9 @@
 import { useKeyboardControls } from "@react-three/drei";
+import useGame from "./stores/useGame.js";
 
 export default function Interface() {
+  const restart = useGame((state) => state.restart);
+  const phase = useGame((state) => state.phase);
   // seperate it to prevent re-render the interface on every key press
   const forward = useKeyboardControls((state) => state.forward);
   const rightward = useKeyboardControls((state) => state.rightward);
@@ -13,7 +16,11 @@ export default function Interface() {
       {/* Time */}
       <div className="time">0.00</div>
       {/* Restart */}
-      <div className="restart">RESTART</div>
+      {phase === "ended" && (
+        <div className="restart" onClick={restart}>
+          RESTART
+        </div>
+      )}
       {/* Controls */}
       <div className="controls">
         <div className="raw">
