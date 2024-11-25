@@ -40,52 +40,72 @@ body,
 /**
  * Restart
  */
-.restart{
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    top:40%;
-    left: 0;
-    width: 100%;
-    color: #ffffff;
-    font-size: 5rem;
-    background-color: #00000033;
-    padding-top: 0.625rem;
-    pointer-events: auto;
-    cursor: pointer;
+.restart {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  color: #ffffff;
+  font-size: 5rem;
+  background-color: #00000033;
+  padding-top: 0.625rem;
+  pointer-events: auto;
+  cursor: pointer;
 }
 /**
  * Controls
  */
-.controls
-{
-    position: absolute;
-    bottom: 10%;
-    left: 0;
-    width: 100%;
+.controls {
+  position: absolute;
+  bottom: 10%;
+  left: 0;
+  width: 100%;
 }
 
-.controls .raw
-{
-    display: flex;
-    justify-content: center;
+.controls .raw {
+  display: flex;
+  justify-content: center;
 }
 
-.controls .key
-{
-    width: 40px;
-    height: 40px;
-    margin: 4px;
-    border: 2px solid #ffffff;
-    background: #ffffff44;
+.controls .key {
+  width: 40px;
+  height: 40px;
+  margin: 4px;
+  border: 2px solid #ffffff;
+  background: #ffffff44;
 }
 
-.controls .key.large
-{
-    width: 144px;
+.controls .key.large {
+  width: 144px;
 }
 
-.controls .key.active
-{
-    background: #ffffff99;
+.controls .key.active {
+  background: #ffffff99;
+}
+
+/**
+ * Mobile Mask
+ */
+.mobile-mask {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff8def0;
+}
+
+.mobile-mask p {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  text-align: center;
+  font-family: "Bebas Neue", cursive;
+  font-size: 3rem; 
+  color: #7bd3ea;
 }
