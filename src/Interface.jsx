@@ -30,7 +30,6 @@ export default function Interface() {
 
       elapsedTime /= 1000;
       elapsedTime = elapsedTime.toFixed(2);
-      console.log(state.startTime);
 
       if (time.current) time.current.textContent = elapsedTime;
     });
