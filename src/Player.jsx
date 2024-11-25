@@ -34,9 +34,25 @@ export default function Player() {
   };
 
   /**
+   * Reset the game
+   */
+  const reset = () => {
+    body.current.setTranslation({ x: 0, y: 1, z: 0 });
+    body.current.setLinvel({ x: 0, y: 0, z: 0 });
+    body.current.setAngvel({ x: 0, y: 0, z: 0 });
+  };
+
+  /**
    * Subscribe to the jump key and trigger the jump method when the key is pressed.
    */
   useEffect(() => {
+    const unsbuscribeReset = useGame.subscribe(
+      (state) => state.phase,
+      (value) => {
+        if (value === "ready") reset();
+      }
+    );
+
     const unsubscribeJump = subscribeKeys(
       (state) => state.jump,
       (value) => {
@@ -49,6 +65,7 @@ export default function Player() {
     });
 
     return () => {
+      unsbuscribeReset();
       unsubscribeJump();
       unsubscribeAny();
     };
