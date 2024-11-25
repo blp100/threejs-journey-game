@@ -16,7 +16,7 @@ export default function Player() {
    * Handles the jump action for the player.
    * Uses a raycast to detect if the player is close to the ground before allowing a jump.
    */
-  const jump = (value) => {
+  const jump = () => {
     const origin = body.current.translation();
     origin.y -= 0.31; // Offset to place the raycast slightly below the player.
     const direction = { x: 0, y: -1, z: 0 }; // Raycast direction (downwards).
@@ -31,7 +31,13 @@ export default function Player() {
    * Subscribe to the jump key and trigger the jump method when the key is pressed.
    */
   useEffect(() => {
-    const unsubscribeJump = subscribeKeys((state) => state.jump, jump);
+    const unsubscribeJump = subscribeKeys(
+      (state) => state.jump,
+      (value) => {
+        if (value) jump();
+      }
+    );
+
     return () => unsubscribeJump();
   }, []);
 
@@ -74,7 +80,7 @@ export default function Player() {
     /**
      * Camera
      */
-    if(body.current){
+    if (body.current) {
       const bodyPosition = body.current.translation();
       const cameraPostion = new THREE.Vector3();
       cameraPostion.copy(bodyPosition);
