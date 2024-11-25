@@ -74,22 +74,24 @@ export default function Player() {
     /**
      * Camera
      */
-    const bodyPosition = body.current.translation();
-    const cameraPostion = new THREE.Vector3();
-    cameraPostion.copy(bodyPosition);
-    cameraPostion.z += 2.25;
-    cameraPostion.y += 0.65;
+    if(body.current){
+      const bodyPosition = body.current.translation();
+      const cameraPostion = new THREE.Vector3();
+      cameraPostion.copy(bodyPosition);
+      cameraPostion.z += 2.25;
+      cameraPostion.y += 0.65;
 
-    const cameraTarget = new THREE.Vector3();
-    cameraTarget.copy(bodyPosition);
-    cameraTarget.y += 0.25;
+      const cameraTarget = new THREE.Vector3();
+      cameraTarget.copy(bodyPosition);
+      cameraTarget.y += 0.25;
 
-    // Smooth the camera's position using lerp (linear interpolation) for a smooth transition over time
-    smoothedCameraPosition.current.lerp(cameraPostion, 5 * delta);
-    smoothedCameraTarget.current.lerp(cameraTarget, 5 * delta);
+      // Smooth the camera's position using lerp (linear interpolation) for a smooth transition over time
+      smoothedCameraPosition.current.lerp(cameraPostion, 5 * delta);
+      smoothedCameraTarget.current.lerp(cameraTarget, 5 * delta);
 
-    state.camera.position.copy(smoothedCameraPosition.current);
-    state.camera.lookAt(smoothedCameraTarget.current);
+      state.camera.position.copy(smoothedCameraPosition.current);
+      state.camera.lookAt(smoothedCameraTarget.current);
+    }
   });
 
   return (
