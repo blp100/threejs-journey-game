@@ -124,8 +124,8 @@ export default function Player() {
     }
     // Mobile
     if (cursor.x !== 0 || cursor.y !== 0) {
-      impulse.x = (cursor.x + impulse.x) * 0.015 * impulseStrength;
-      impulse.z = (cursor.y + impulse.z) * 0.015 * impulseStrength;
+      impulse.x = (cursor.x + impulse.x) * 0.025 * impulseStrength;
+      impulse.z = (cursor.y + impulse.z) * 0.025 * impulseStrength;
       torque.z = (-cursor.x + torque.z) * 0.03 * torqueStrength;
       torque.x = (cursor.y + torque.x) * 0.03 * torqueStrength;
     }
