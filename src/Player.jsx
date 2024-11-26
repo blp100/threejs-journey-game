@@ -19,6 +19,8 @@ export default function Player() {
   const restart = useGame((state) => state.restart);
   const blocksCount = useGame((state) => state.blocksCount);
 
+  const cursor = useJoystick((state) => state.cursor);
+
   /**
    * Handles the jump action for the player.
    * Uses a raycast to detect if the player is close to the ground before allowing a jump.
@@ -68,6 +70,13 @@ export default function Player() {
       }
     );
 
+    const unsubscribeCursor = useJoystick.subscribe(
+      (state) => state.cursor,
+      (value) => {
+        if (value.x !== 0 || value.y !== 0) start();
+      }
+    );
+
     const unsubscribeAny = subscribeKeys(() => {
       start();
     });
@@ -76,6 +85,7 @@ export default function Player() {
       unsbuscribeReset();
       unsubscribeJumpButton();
       unsubscribeJump();
+      unsubscribeCursor();
       unsubscribeAny();
     };
   }, []);
@@ -84,6 +94,7 @@ export default function Player() {
     /**
      * Controls
      */
+    // Keyboard
     const { forward, backward, leftward, rightward } = getKeys();
 
     const impulse = { x: 0, y: 0, z: 0 };
@@ -111,11 +122,19 @@ export default function Player() {
       impulse.x -= impulseStrength;
       torque.z += torqueStrength;
     }
+    // Mobile
+    if (cursor.x !== 0 || cursor.y !== 0) {
+      impulse.x = (cursor.x + impulse.x) * 0.015 * impulseStrength;
+      impulse.z = (cursor.y + impulse.z) * 0.015 * impulseStrength;
+      torque.z = (-cursor.x + torque.z) * 0.03 * torqueStrength;
+      torque.x = (cursor.y + torque.x) * 0.03 * torqueStrength;
+    }
 
     if (body.current) {
       body.current.applyImpulse(impulse);
       body.current.applyTorqueImpulse(torque);
     }
+
     /**
      * Camera
      */

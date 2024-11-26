@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import useMobileDetect from "./hooks/useMobileDetect";
-import { addEffect } from "@react-three/fiber";
 import JumpButton from "./JumpButton";
+import useJoystick from "./stores/useJoystick";
 
 export default function Joystick() {
-  const isMobile = useMobileDetect();
   const active = useRef(false);
   const [center, setCenter] = useState({ x: 0, y: 0 });
   const [currentCenter, setCurrentCenter] = useState({ x: 0, y: 0 });
@@ -12,12 +10,10 @@ export default function Joystick() {
   const cursor = useRef();
   const limit = useRef();
   const identifier = useRef();
-  const [originalAngelValue, setOriginalAngelValue] = useState(0);
-  const angleOffset = Math.PI * 0.18;
-  const angleValue = -Math.PI * 0.5;
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const cursorPosition = useJoystick((state) => state.cursor);
+  const setCursorPosition = useJoystick((state) => state.setCursorPosition);
 
-  const touchHandler = (event) => {
+  const touchStart = (event) => {
     event.preventDefault();
 
     const touch = event.changedTouches[0];
@@ -60,6 +56,7 @@ export default function Joystick() {
     }
   };
 
+  // Calculate the joystick center
   useEffect(() => {
     const boundings = joystick.current?.getBoundingClientRect();
 
@@ -88,7 +85,6 @@ export default function Joystick() {
       currentCenter.y - center.y,
       currentCenter.x - center.x
     );
-    const angle = originalAngel + angleOffset;
 
     const distance = Math.hypot(
       currentCenter.y - center.y,
@@ -112,63 +108,59 @@ export default function Joystick() {
 
   return (
     <>
-      {isMobile && (
-        <>
-          <div
-            ref={joystick}
-            className="element"
-            style={{
-              userSelect: "none",
-              position: "fixed",
-              bottom: "0.625rem",
-              left: "0.625rem",
-              width: "10.5rem",
-              height: "10.5rem",
-              borderRadius: "50%",
-              transition: "opacity 0.3s 0.0s",
-              willChange: "opacity",
-              opacity: 1,
-              zIndex: 1,
-            }}
-            onTouchStart={touchHandler}
-          >
-            <div
-              className="cursor"
-              ref={cursor}
-              style={{
-                position: "absolute",
-                top: "calc(50% - 2rem)",
-                left: "calc(50% - 2rem)",
-                width: "4rem",
-                height: "4rem",
-                border: "2px solid #ffffff",
-                borderRadius: "50%",
-                boxSizing: "border-box",
-                pointerEvents: "none",
-                willChange: "transform",
-                transform: `translateX(${cursorPosition.x}px) translateY(${cursorPosition.y}px)`,
-              }}
-            />
-            <div
-              className="limit"
-              ref={limit}
-              style={{
-                position: "absolute",
-                top: "calc(50% - 5rem)",
-                left: "calc(50% - 5rem)",
-                width: "10rem",
-                height: "10rem",
-                border: "2px solid #ffffff",
-                borderRadius: "50%",
-                opacity: 0.25,
-                pointerEvents: "none",
-                boxSizing: "border-box",
-              }}
-            />
-          </div>
-          <JumpButton />
-        </>
-      )}
+      <div
+        ref={joystick}
+        className="element"
+        style={{
+          userSelect: "none",
+          position: "fixed",
+          bottom: "0.625rem",
+          left: "0.625rem",
+          width: "10.5rem",
+          height: "10.5rem",
+          borderRadius: "50%",
+          transition: "opacity 0.3s 0.0s",
+          willChange: "opacity",
+          opacity: 1,
+          zIndex: 1,
+        }}
+        onTouchStart={touchStart}
+      >
+        <div
+          className="cursor"
+          ref={cursor}
+          style={{
+            position: "absolute",
+            top: "calc(50% - 2rem)",
+            left: "calc(50% - 2rem)",
+            width: "4rem",
+            height: "4rem",
+            border: "2px solid #ffffff",
+            borderRadius: "50%",
+            boxSizing: "border-box",
+            pointerEvents: "none",
+            willChange: "transform",
+            transform: `translateX(${cursorPosition.x}px) translateY(${cursorPosition.y}px)`,
+          }}
+        />
+        <div
+          className="limit"
+          ref={limit}
+          style={{
+            position: "absolute",
+            top: "calc(50% - 5rem)",
+            left: "calc(50% - 5rem)",
+            width: "10rem",
+            height: "10rem",
+            border: "2px solid #ffffff",
+            borderRadius: "50%",
+            opacity: 0.25,
+            pointerEvents: "none",
+            boxSizing: "border-box",
+          }}
+        />
+      </div>
+      <JumpButton />
     </>
   );
 }
