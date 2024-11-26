@@ -163,7 +163,7 @@ export default function Player() {
     if (bodyPosition?.z < -(blocksCount * 4 + 2)) {
       end();
     }
-    if (bodyPosition?.z > 2 && bodyPosition?.y < -4) {
+    if (bodyPosition?.z > 6 || bodyPosition?.y < -4) {
       restart();
     }
   });
