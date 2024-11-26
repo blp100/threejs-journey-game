@@ -5,12 +5,14 @@ import Experience from "./Experience.jsx";
 import { KeyboardControls } from "@react-three/drei";
 import Interface from "./Interface.jsx";
 import MobileMask from "./MobileMask.jsx";
+import Joystick from "./JoyStick.jsx";
 
 const root = ReactDOM.createRoot(document.querySelector("#root"));
 
 root.render(
   <>
-    <MobileMask />
+    {/* <MobileMask /> */}
+    <Joystick />
     <KeyboardControls
       map={[
         { name: "forward", keys: ["ArrowUp", "KeyW"] },
