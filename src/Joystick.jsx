@@ -60,20 +60,15 @@ export default function Joystick() {
     }
   };
 
-  useEffect(
-    () => {
-      const boundings = joystick.current?.getBoundingClientRect();
+  useEffect(() => {
+    const boundings = joystick.current?.getBoundingClientRect();
 
-      if (boundings)
-        setCenter({
-          x: boundings.left + boundings.width * 0.5,
-          y: boundings.top + boundings.height * 0.5,
-        });
-    },
-    [
-      /* TODO: would add dependencies */
-    ]
-  );
+    if (boundings)
+      setCenter({
+        x: boundings.left + boundings.width * 0.5,
+        y: boundings.top + boundings.height * 0.5,
+      });
+  }, [joystick.current]);
 
   useEffect(() => {
     // Add touch events to the entire screen while the user is actively touching.

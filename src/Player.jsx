@@ -4,6 +4,7 @@ import { useKeyboardControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import useGame from "./stores/useGame.js";
+import useJoystick from "./stores/useJoystick.js";
 
 export default function Player() {
   const body = useRef();
@@ -53,6 +54,13 @@ export default function Player() {
       }
     );
 
+    const unsubscribeJumpButton = useJoystick.subscribe(
+      (state) => state.jump,
+      (value) => {
+        if (value) jump();
+      }
+    );
+
     const unsubscribeJump = subscribeKeys(
       (state) => state.jump,
       (value) => {
@@ -66,6 +74,7 @@ export default function Player() {
 
     return () => {
       unsbuscribeReset();
+      unsubscribeJumpButton();
       unsubscribeJump();
       unsubscribeAny();
     };

@@ -1,9 +1,12 @@
 import { create } from "zustand";
+import { subscribeWithSelector } from "zustand/middleware";
 
-export default create((set)=>{
-  return {
-    jump: false,
-    pressJump: () => set({ jump: true }),
-    releaseJump: () => set({ jump: false }),
-  };
-})
+export default create(
+  subscribeWithSelector((set) => {
+    return {
+      jump: false,
+      pressJump: () => set({ jump: true }),
+      releaseJump: () => set({ jump: false }),
+    };
+  })
+);
