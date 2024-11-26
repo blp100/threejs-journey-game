@@ -4,9 +4,7 @@ export default function JumpButton() {
   const jump = useJoystick((state) => state.jump);
   const pressJump = useJoystick((state) => state.pressJump);
   const releaseJump = useJoystick((state) => state.releaseJump);
-
-  console.log(jump);
-
+  
   return (
     <button
       className="jump"

@@ -8,8 +8,6 @@ export default function Keyboard() {
   const leftward = useKeyboardControls((state) => state.leftward);
   const jump = useKeyboardControls((state) => state.jump);
 
-  console.log(forward);
-
   return (
     <div className="controls">
       <div className="raw">
