@@ -1,10 +1,10 @@
-import useJoystick from "./stores/useJoystick";
+import useJoystick from "./stores/useJoystick.js";
 
 export default function JumpButton() {
   const jump = useJoystick((state) => state.jump);
   const pressJump = useJoystick((state) => state.pressJump);
   const releaseJump = useJoystick((state) => state.releaseJump);
-  
+
   return (
     <button
       className="jump"

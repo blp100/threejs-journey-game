@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import JumpButton from "./JumpButton";
-import useJoystick from "./stores/useJoystick";
+import JumpButton from "./JumpButton.jsx";
+import useJoystick from "./stores/useJoystick.js";
 
 export default function Joystick() {
   const active = useRef(false);
