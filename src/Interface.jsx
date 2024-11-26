@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { addEffect } from "@react-three/fiber";
 import useGame from "./stores/useGame.js";
-import Joystick from "./JoyStick.jsx";
-import Keyboard from "./KeyBoard.jsx";
+import Joystick from "./Joystick.jsx";
+import Keyboard from "./Keyboard.jsx";
 import useMobileDetect from "./hooks/useMobileDetect.js";
 
 export default function Interface() {
