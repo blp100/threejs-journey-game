@@ -3,8 +3,10 @@ import { addEffect } from "@react-three/fiber";
 import useGame from "./stores/useGame.js";
 import Joystick from "./JoyStick.jsx";
 import Keyboard from "./KeyBoard.jsx";
+import useMobileDetect from "./hooks/useMobileDetect.js";
 
 export default function Interface() {
+  const isMobile = useMobileDetect();
   const time = useRef();
 
   const restart = useGame((state) => state.restart);
@@ -46,8 +48,9 @@ export default function Interface() {
           </div>
         )}
         {/* Controls */}
+        {!isMobile && <Keyboard />}
       </div>
-      <Joystick />
+      {isMobile && <Joystick />}
     </>
   );
 }
