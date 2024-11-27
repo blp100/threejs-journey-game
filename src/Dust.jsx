@@ -32,13 +32,6 @@ const fragmentShader = /* glsl */ `
   }
 `;
 
-const ParticlesMaterial = shaderMaterial(
-  { uTime: 0, uAlpha: 0 },
-  vertextShader,
-  fragmentShader
-);
-extend({ ParticlesMaterial });
-
 export default function Dust() {
   const pointsCount = 100;
   const positions = new Float32Array(pointsCount * 3);
@@ -57,7 +50,6 @@ export default function Dust() {
     if (alpha <= 1 && alpha >= 0) {
       particlesMaterial.current.uniforms.uAlpha.value -= 2 * delta;
     }
-    console.log(particlesMaterial.current.uniforms.uAlpha.value);
   });
 
   return (
