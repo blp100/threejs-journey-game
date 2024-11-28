@@ -1,7 +1,7 @@
 import { useRapier, RigidBody } from "@react-three/rapier";
 import { useFrame } from "@react-three/fiber";
 import { useKeyboardControls } from "@react-three/drei";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import useGame from "./stores/useGame.js";
 import useJoystick from "./stores/useJoystick.js";
@@ -11,6 +11,7 @@ export default function Player() {
   const body = useRef();
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const { rapier, world } = useRapier();
+  const [dustPosition, setDustPosition] = useState({ x: 0, y: 0, z: 0 });
 
   const smoothedCameraPosition = useRef(new THREE.Vector3(10, 10, 10));
   const smoothedCameraTarget = useRef(new THREE.Vector3());
@@ -33,8 +34,11 @@ export default function Player() {
     const ray = new rapier.Ray(origin, direction);
     const hit = world.castRay(ray, 10, true);
 
-    if (hit.timeOfImpact < 0.15)
+    if (hit.timeOfImpact < 0.15) {
       body.current.applyImpulse({ x: 0, y: 0.5, z: 0 });
+
+      setDustPosition({ ...origin });
+    }
   };
 
   /**
@@ -186,7 +190,7 @@ export default function Player() {
           <meshStandardMaterial flatShading color="mediumpurple" />
         </mesh>
       </RigidBody>
-      <Dust />
+      <Dust position={dustPosition} />
     </>
   );
 }
